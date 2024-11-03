@@ -121,7 +121,8 @@ app.post('/register', async (req, res) => {
             },
         };
 
-        await dynamoDB.put(params); // DynamoDBDocumentClient handles this
+        await dynamoDB.send(new UpdateCommand(params));
+
         res.status(201).json({ message: 'User registered successfully' });
 
     } catch (error) {
