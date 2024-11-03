@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, GetCommand, UpdateCommand, ScanCommand } = require('@aws-sdk/lib-dynamodb');
+const { DynamoDBDocumentClient, GetCommand, UpdateCommand, ScanCommand, PutCommand } = require('@aws-sdk/lib-dynamodb');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
@@ -121,7 +121,7 @@ app.post('/register', async (req, res) => {
             },
         };
 
-        await dynamoDB.send(new UpdateCommand(params));
+        await dynamoDB.send(new PutCommand(params));
 
         res.status(201).json({ message: 'User registered successfully' });
 
