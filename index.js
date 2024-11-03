@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 // Enable CORS for any origin (or specify allowed origins)
 app.use(cors({
-    origin: 'https://advice-generator-frontend-9vm8.vercel.app', // Specify your frontend URL
+    origin: 'https://advice-generator-frontend-vp3q.vercel.app', // Specify your frontend URL
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
 }));
