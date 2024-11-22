@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  title: Advice Generator API
+  version: 1.0.0
+  description: API documentation for the Advice Generator application
+servers:
+  - url: http://localhost:3000
+    description: Development server
+
+paths:
+  /register:
+    post:
+      summary: Register a new user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: User's name
+                email:
+                  type: string
+                  format: email
+                  description: User's email
+                password:
+                  type: string
+                  description: User's password
+      responses:
+        '201':
+          description: User successfully registered
+        '400':
+          description: Validation error
+        '500':
+          description: Server error
+
+  /login:
+    post:
+      summary: Log in a user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User's email
+                password:
+                  type: string
+                  description: User's password
+      responses:
+        '200':
+          description: User successfully logged in
+        '401':
+          description: Invalid credentials
+        '500':
+          description: Server error
+
+  /getAdvice:
+    post:
+      summary: Get health advice
+      tags:
+        - Advice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                age:
+                  type: integer
+                  description: User's age
+                name:
+                  type: string
+                  description: User's name
+                behavior:
+                  type: string
+                  description: User's behavior
+      responses:
+        '200':
+          description: Health advice returned successfully
+        '400':
+          description: Validation error
+        '500':
+          description: Server error
+
+  /translate:
+    post:
+      summary: Translate text to a specified language
+      tags:
+        - Translation
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Text to be translated
+                language:
+                  type: string
+                  description: Target language for translation
+      responses:
+        '200':
+          description: Translation returned successfully
+        '400':
+          description: Validation error
+        '500':
+          description: Server error
+
+  /requestCount:
+    get:
+      summary: Get the user's request count
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns the user's request count
+        '500':
+          description: Server error
+
+  /userRequests:
+    get:
+      summary: Get all user requests
+      tags:
+        - Admin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of all user requests
+        '403':
+          description: Access denied
+        '500':
+          description: Server error
+
+  /updateRequestCount:
+    put:
+      summary: Update a user's request count
+      tags:
+        - Admin
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User's email
+                requestCount:
+                  type: integer
+                  description: New request count
+      responses:
+        '200':
+          description: Request count updated successfully
+        '400':
+          description: Validation error
+        '403':
+          description: Access denied
+        '500':
+          description: Server error
+
+  /deleteProfile:
+    delete:
+      summary: Delete the user's profile
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Profile deleted successfully
+        '500':
+          description: Server error
+
+  /apiStats:
+    get:
+      summary: Get API statistics
+      tags:
+        - Admin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Returns API statistics
+        '403':
+          description: Access denied
+        '500':
+          description: Server error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
