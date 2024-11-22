@@ -31,7 +31,7 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Enable CORS for any origin (or specify allowed origins)
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', // Specify your frontend URL
+    origin: process.env.FRONTEND_URL, // Specify your frontend URL
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
 }));
